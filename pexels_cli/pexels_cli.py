@@ -10,8 +10,9 @@ Usage:
     pexels -v | --version
 ------------------------------------------------------------------
 Options:
-    --show-browser              Showing Browser if You Need, Deault: False
-    --load-time=<seconds>       Infinite Scroll Time Out, Deault: 5
+    --folder-name               Destination Folder name, Default: downloads
+    --show-browser              Showing Browser if You Need, Default: False
+    --load-time=<seconds>       Infinite Scroll Time Out, Default: 5
     --page-count=<count>        Page Counter, Default: 0 (All Pages)
     -h --help                   Show this screen.
     -v --version                Show version.
@@ -47,13 +48,16 @@ class PexelsCrawler:
         userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         # DataBase Connection Config
         self.dataBaseConnection = sqlite3.connect('pexels.db')
+        self.folderName = kwargs.get('folderName', 'downloads')
         self.showBrowser = kwargs.get('showBrowser', True)
         self.ScrollTimeout = kwargs.get('ScrollTimeout', 5)
         self.ScrollCounte = kwargs.get('ScrollCounte', 0)
         
         # Create New Folder Base on Keyword Search
-        if not os.path.exists( 'downloads' ):
-            os.makedirs( 'downloads' )
+        self.currentPath = os.path.abspath(os.getcwd())
+        self.downloadPath = os.path.join( self.currentPath, self.folderName)
+        if not os.path.exists( self.downloadPath ):
+            os.makedirs( self.downloadPath )
         
         try:
             self.dataBaseConnection.execute('''CREATE TABLE pexels
@@ -142,8 +146,8 @@ class PexelsCrawler:
         self.infiniteScroll( self.ScrollTimeout, self.ScrollCounte )
         
         # Create Download Folder if no Exist
-        if not os.path.exists( f'downloads/{folderName}' ):
-            os.makedirs( f'downloads/{folderName}' )
+        if not os.path.exists( f'{self.downloadPath}/{folderName}' ):
+            os.makedirs( f'{self.downloadPath}/{folderName}' )
 
         imagesList = self.driver.find_elements_by_css_selector('div.search__grid .photos article.photo-item a.photo-item__link > img')
         for index, image in enumerate( imagesList ):
@@ -154,7 +158,7 @@ class PexelsCrawler:
                 cleanImageUrl = image.get_attribute('data-big-src').split('?')[0]
                 
                 # Insert Item to DB After Download
-                if self.saveImage( cleanImageUrl, f'downloads/{folderName}/{folderName}-{ str(index + 1) }.jpeg' ):
+                if self.saveImage( cleanImageUrl, f'{self.downloadPath}/{folderName}/{folderName}-{ str(index + 1) }.jpeg' ):
                     self.insertItemtoDatabase( processedLinkSlug )
 
     def isImageProcessed( self, linkSlug ):
@@ -175,15 +179,15 @@ class PexelsCrawler:
         self.driver.quit()
 
 def main():
-    print( os.getcwd() )
     arguments = docopt(__doc__, version='v1.0')
+    folderName = str( arguments['--folder-name '] ) if arguments['--folder-name '] else 'downloads'
     ScrollTimeout = int( arguments['--load-time'] ) if arguments['--load-time'] else 5
     ScrollCounte = int( arguments['--page-count'] ) if arguments['--page-count'] else 0
     showBrowser = arguments['--show-browser']
     keyword = arguments['<keyword>']
 
 
-    Pexels = PexelsCrawler( showBrowser=showBrowser, ScrollTimeout=ScrollTimeout, ScrollCounte=ScrollCounte )
+    Pexels = PexelsCrawler( showBrowser=showBrowser, ScrollTimeout=ScrollTimeout, ScrollCounte=ScrollCounte, folderName=folderName )
 
     if ( arguments['search'] ):
         Pexels.getImageByTags( keyword=keyword )
@@ -195,4 +199,4 @@ def main():
 
 
 # if __name__ == "__main__":
-#     main()
+    # main()
