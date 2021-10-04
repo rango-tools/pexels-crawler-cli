@@ -20,6 +20,9 @@ setuptools.setup(
     url="https://github.com/rango-tools/pexels-crawler-cli",
     packages=setuptools.find_packages(),
     install_requires=read_requirements(),
+    scripts=[
+        'pexels'
+    ],
     classifiers=(
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
