@@ -3,12 +3,12 @@ This is Simple CLI To Get Image With Specific Tag [Pexels](https://www.pexels.co
 
 
 ## Installation
-First you need to install `Python v3.8` or upper after please install below packages with `pip`
+
+### Prerequisites
+First you need to install `Python v3.x` or upper after that you need to setup the `chrome driver` for Selenium Library.
 
 ```bash
-pip install requests
-pip install selenium
-pip install docopt
+python3 -m pip install git+https://github.com/rango-tools/pexels-crawler-cli
 ```
 
 ## CLI Options
@@ -26,7 +26,6 @@ Simple example for this CLI when you want to run.
 
 
 ```bash
-
 # Search By Keyword
 python pexels.py search [--options] "YOUR-KEYWORD"
 ```
