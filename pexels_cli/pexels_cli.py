@@ -1,13 +1,13 @@
 __author__ = "Amirhossein Douzendeh Zenoozi"
 __license__ = "MIT"
-__version__ = "1.0"
+__version__ = "0.1.0"
 __proxy__ = False
 __doc__ = """
 Pexels CLI Crawler
 Usage:
-    pexels.py search [--show-browser] [--load-time=<seconds>] [--page-count=<count>] <keyword>
-    pexels.py -h | --help
-    pexels.py -v | --version
+    pexels search [--show-browser] [--load-time=<seconds>] [--page-count=<count>] <keyword>
+    pexels -h | --help
+    pexels -v | --version
 ------------------------------------------------------------------
 Options:
     --show-browser              Showing Browser if You Need, Deault: False
