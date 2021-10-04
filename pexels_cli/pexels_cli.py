@@ -39,6 +39,7 @@ import time
 import re
 import sqlite3
 import json
+import sys
 
 
 class PexelsCrawler:
@@ -175,6 +176,7 @@ class PexelsCrawler:
         self.driver.quit()
 
 def main():
+    print(sys.path[0])
     arguments = docopt(__doc__, version='v1.0')
     ScrollTimeout = int( arguments['--load-time'] ) if arguments['--load-time'] else 5
     ScrollCounte = int( arguments['--page-count'] ) if arguments['--page-count'] else 0
@@ -191,3 +193,7 @@ def main():
         print(Style.RESET_ALL)
     
     Pexels.closeDriver()
+
+
+# if __name__ == "__main__":
+#     main()
