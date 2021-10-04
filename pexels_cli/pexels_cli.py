@@ -175,6 +175,7 @@ class PexelsCrawler:
         self.driver.quit()
 
 def main():
+    print( os.getcwd() )
     arguments = docopt(__doc__, version='v1.0')
     ScrollTimeout = int( arguments['--load-time'] ) if arguments['--load-time'] else 5
     ScrollCounte = int( arguments['--page-count'] ) if arguments['--page-count'] else 0
