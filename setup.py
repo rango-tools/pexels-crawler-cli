@@ -25,4 +25,10 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License"
     ),
+    entry_points ={
+            'console_scripts': [
+                'pexels = pexels_cli.pexels_cli:main'
+            ]
+        },
+    keywords ='pexels crawler selenium python package image photo dataset cli search tools web',
 )
