@@ -14,9 +14,10 @@ python3 -m pip install git+https://github.com/rango-tools/pexels-crawler-cli
 ## CLI Options
 This is the list of this CLI options
 ```
+--folder-name                       Destination Folder name, Default: downloads
 --page-count=<count>                Page Counter, Default: 0 (All Pages)
 --show-browser                      Showing Browser if You Need.
---load-time=<seconds>               Infinite Scroll Time Out, Deault: 5
+--load-time=<seconds>               Infinite Scroll Time Out, Default: 5
 -h --help                           Show this screen.
 -v --version                        Show version.
 ```
@@ -27,5 +28,5 @@ Simple example for this CLI when you want to run.
 
 ```bash
 # Search By Keyword
-python pexels.py search [--options] "YOUR-KEYWORD"
+pexels search [--options] "YOUR-KEYWORD"
 ```
